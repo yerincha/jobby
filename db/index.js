@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
 });
 
 var selectAll = function (callback) {
-  connection.query('SELECT * FROM company limit 10', function (err, results, fields) {
+  connection.query('SELECT * FROM company', function (err, results, fields) {
     if (err) {
       callback(err, null);
     } else {

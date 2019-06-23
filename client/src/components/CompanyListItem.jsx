@@ -5,25 +5,24 @@ class CompanyListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isExpand: true,
+
     }
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
     // const { isExpand } = this.state;
-    this.setState({
-      isExpand: true,
-    })
+    // this.setState({
+    //   isExpand: true,
+    // })
+    console.log('hihi')
   }
   render(){
-    const { item, id } = this.props;
-    const { isExpand } = this.state;
+    const {item} = this.props;
     return (
-      <div className='companyList' key={id}>
-    <img src={`https://logo.clearbit.com/${this.props.item.website}`}></img> <br />
-    <div className='name' onClick={this.handleClick}>{item.name}</div>
-    <div className='location'>{item.location}</div>
-    {isExpand ? <CompanyInfo item={item}/> : null}
+      <div className='companyList' key={item}>
+    <div className='name' onClick={this.handleClick}>{item}</div>
+    {/* <div className='location'>{item.location}</div> */}
+    {/* {isExpand ? <CompanyInfo item={item}/> : null} */}
   </div>
     )
   }

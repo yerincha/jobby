@@ -38,10 +38,12 @@ class App extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<div >
+      <div className="header">
       <div className='title'> Jobby </div>
       <div className='dream'> Job searching? Could be your Hobby</div>
       <div className='made'>Made by. Yerin Cha</div>
+      </div>
       <CompanyList items={this.state.items} />
     </div>)
   }
