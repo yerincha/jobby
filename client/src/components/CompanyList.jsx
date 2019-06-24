@@ -1,97 +1,141 @@
-import React, { useState } from 'react';
-import WrappedMap from './Maps.jsx'
-import API_KEY from '../../maps-config';
+import React, { Component } from 'react';
+import axios from 'axios';
 import MUIDataTable from "mui-datatables";
-import FormControlLabel from "mui-datatables/node_modules/@material-ui/core/FormControlLabel";
-import Switch from "mui-datatables/node_modules/@material-ui/core/Switch";
-import CompanyListIte from './CompanyListItem.jsx'
-import CompanyListItem from './CompanyListItem.jsx';
+import Modal from 'react-bootstrap/Modal'
+
+import CompanyInfo from './CompanyInfo.jsx';
 
 
 
-const CompanyList = ({ items }) => {
-
-  const columns = [{
-    name: "name",
-    label: "Name",
-    options: {
-      filter: false,
-      sort: true,
-      customBodyRender: (value) => {
-        return(
-          <CompanyListItem  item={value}/> 
-        )
-      }
+class CompanyList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clickedCompanyName: '',
+      items: [],
+      show: false,
     }
-  }, {
-    name: "tags",
-    label: "Category",
-    options: {
-      filter: true,
-      sort: true,
-    }
-  }, {
-    name: "location",
-    label: "Location",
-    options: {
-      filter: true,
-      sort: true,
-    }, 
-  }, {
-        name: "Interested",
+
+    this.handleHide = () => {
+      this.setState({ show: false });
+    };
+
+    this.updateList = this.updateList.bind(this);
+    this.fetchCompanyData = this.fetchCompanyData.bind(this);
+  }
+
+componentDidMount() {
+  this.fetchCompanyData()
+}
+
+fetchCompanyData() {
+  axios.get('/items')
+    .then((response) => {
+      this.updateList(response.data)
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+}
+
+updateList(response) {
+  this.setState({
+    items: response,
+  })
+}
+
+  render() {
+    const { items } = this.state;
+
+    const columns = [
+      {
+        name: "website",
+        label: "Logo",
         options: {
-          filter: true,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <FormControlLabel
-                label={value ? "Yes" : "No"}
-                value={value ? "Yes" : "No"}
-                control={
-                  <Switch
-                    color="primary"
-                    checked={value}
-                    value={value ? "Yes" : "No"}
-                  />
-                }
-                onChange={event => {
-                  updateValue(event.target.value === "Yes" ? false : true);
-                }}
-              />
-            );
+          filter: false,
+          sort: false,
+          customBodyRender: (website) => {
+            return (<img src={`https://logo.clearbit.com/${website}`} width="40%" />)
           }
         }
-      }];
-  const options = {
-    filterType: 'dropdown',
-    responsive: "scroll",
+      },
+      {
+        name: "name",
+        label: "Name",
+        options: {
+          filter: false,
+          sort: true,
+        }
+      }, {
+        name: "tags",
+        label: "Category",
+        options: {
+          filter: true,
+          sort: true,
+        }
+      }, {
+        name: "location",
+        label: "Location",
+        options: {
+          filter: true,
+          sort: true,
+        },
+      }, {
+        name: "address",
+        label: "Address",
+      },
+    ];
+    const options = {
+      filter: true,
+      filterType: 'dropdown',
+      selectableRows: 'none',
+      onRowClick: (rowData) => {
+        this.setState({
+          clickedCompanyName: rowData[1],
+          show: true
+        })
+      },
+      rowsPerPageOptions: [10, 20, 50, 100, items.length]
+    }
+    return (
+      <div className="listing">
+        <div className="looking">
+          <h4> Companies that you are looking for </h4>
+          There are {items.length} companies.
+      </div>
+        <div className="list">
+
+          <MUIDataTable
+            styles={{"z-index": -1}}
+            title={"Company List"}
+            data={items}
+            columns={columns}
+            options={options}
+          />
+        </div>
+        {/* <div>
+        {this.state.isClicked ?  : null}
+        </div> */}
+        <Modal
+          size="lg"
+          show={this.state.show}
+          onHide={this.handleHide}
+          dialogClassName="modal-90w"
+          aria-labelledby="example-custom-modal-styling-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              {this.state.clickedCompanyName}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <CompanyInfo item={this.state.clickedCompanyName} />
+          </Modal.Body>
+        </Modal>
+      </div>
+    )
   }
-  return (
-    <div>
-      <div className="looking">
-        <h4> Companies that you are looking for </h4>
-        There are {items.length} companies.
-      </div>
-      <div>
-        {/* <div className='info' style={{ height: '40vw', width: "80" }}>
-      <WrappedMap
-        items={items}
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
-        loadingElement={<div style={{ height: "80%" }} />}
-        containerElement={<div style={{ height: "80%" }} />}
-        mapElement={<div style={{ height: "80%" }} />}
-      />
-     */}
-      </div>
-      <div>
-        <MUIDataTable
-          title={"Company List"}
-          data={items}
-          columns={columns}
-          options={options}
-        />
-      </div >
-    </div>
-  );
+
 }
 
 export default CompanyList;

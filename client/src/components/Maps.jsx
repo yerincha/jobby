@@ -6,23 +6,20 @@ import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'reac
 
 
 
-const Map = ({ items }) => {
+const Map = ({ item }) => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   return (
     <GoogleMap
-      defaultZoom={12}
-      defaultCenter={{ lat: 37.772221, lng: -122.423950 }}
+      defaultZoom={14}
+      defaultCenter={{ lat: Number(item.latitude), lng: Number(item.longitute) }}
     >
-      { items.map(item => (
         <Marker 
-        key={item.id}
           options={{ icon: { url: `https://logo.clearbit.com/${item.website}`, scaledSize: new google.maps.Size(20, 20)} }}
           position={{ lat: Number(item.latitude), lng: Number(item.longitute) }} 
           onClick={()=> {
             setSelectedCompany(item);
           }}
         />
-      ))}
 
       {selectedCompany && (
         <InfoWindow

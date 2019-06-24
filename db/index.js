@@ -19,4 +19,14 @@ var selectAll = function (callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+var selectOne = function (name, callback) {
+  connection.query(`SELECT * FROM company WHERE name = "${name}"`, function (err, results, fields) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports = {selectAll, selectOne};
