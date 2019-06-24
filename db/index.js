@@ -2,6 +2,8 @@ const dbconfig = require('./dbconfig.js');
 
 var mysql = require('mysql');
 
+const Promise = require('bluebird');
+
 var connection = mysql.createConnection({
   host: 'localhost',
   user: dbconfig.dbName,
@@ -10,7 +12,7 @@ var connection = mysql.createConnection({
 });
 
 var selectAll = function (callback) {
-  connection.query('SELECT * FROM company', function (err, results, fields) {
+  connection.query('SELECT * FROM company inner join openings on company.id = openings.id;', function (err, results, fields) {
     if (err) {
       callback(err, null);
     } else {
@@ -29,4 +31,14 @@ var selectOne = function (name, callback) {
   });
 };
 
-module.exports = {selectAll, selectOne};
+var queryPromise = function (sql, args) {
+  return new Promise((resolve, reject) => {
+    connection.query(sql, args, (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows);
+    });
+  });
+}
+
+module.exports = { selectAll, selectOne, queryPromise };

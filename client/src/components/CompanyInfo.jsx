@@ -22,34 +22,40 @@ class CompanyInfo extends React.Component {
       .catch((error) => {
         console.log(error);
       })
-
   }
   render() {
     const { company } = this.state;
     const { item } = this.props;
     return (
       <div className='popup'>
-      <div className='popup_inner'>
-          <img src={`https://logo.clearbit.com/${company.website}`} />
-        <div>{company.name}</div>
-        <div>{company.location}</div>
-        <div>{company.founded}</div>
-        <div>{company.tags}</div>
-        <div>{company.description}</div>
-        <div>{company.size}</div>
-        <a href={company.website}>{company.website}</a>        
-        <div className='info' style={{ height: '30vw', width: "50vh" }}>
-          {<WrappedMap
-            item={company}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
-            loadingElement={<div style={{ height: "80%" }} />}
-            containerElement={<div style={{ height: "80%" }} />}
-            mapElement={<div style={{ height: "80%" }} />}
-          />}
+        <div className='popup_inner'>
+          <div className='company_logo'><img className="logo" height="150" width="150" src={`https://logo.clearbit.com/${company.website}`} /></div>
+          <div className="empty"></div>
+          <div className="company_info">
+            <div className="company_name">{company.name}</div><br />
+            <div className="company_location">{company.location}</div>
+            <div className="company_size">Size: {company.size}</div>
+            <div className="company_founded">{company.founded}</div>
+            <div className="company_website"><a href={company.website}>{company.website}</a> </div>
+            <div className="company_tags">Category: {company.tags}</div>
+          </div>
+          <div className="description">Description</div>
+          <div className="company_description">{company.description}</div> 
+          <br />
+          <br />
         </div>
+          <div className="maps" style={{ height: '30vw', width: "100vh" }}>
+            {<WrappedMap
+              item={company}
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
+              loadingElement={<div style={{ height: "100%" }} />}
+              containerElement={<div style={{ height: "100%" }} />}
+              mapElement={<div style={{ height: "100%" }} />}
+            />}
+          </div>
           <JobTabLayout companyName={item} />
 
-      </div>
+        
       </div>
     )
   }

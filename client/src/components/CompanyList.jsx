@@ -83,6 +83,9 @@ updateList(response) {
       }, {
         name: "address",
         label: "Address",
+      }, {
+        name: "total",
+        label: "Openings",
       },
     ];
     const options = {
