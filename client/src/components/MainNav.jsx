@@ -36,11 +36,6 @@ class MainNav extends React.Component {
                 <Nav.Item>
                     <Nav.Link eventKey="useful">👍 Useful</Nav.Link>
                 </Nav.Item>
-                {/* <Nav.Item>
-                    <Nav.Link eventKey="disabled" disabled>
-                        Disabled
-            </Nav.Link>
-                </Nav.Item> */}
             </Nav>
             {this.state.activeKey === 'Home' ? <Home /> : null}
             {this.state.activeKey === 'company' ? <CompanyList /> : null}

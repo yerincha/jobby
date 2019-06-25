@@ -9,7 +9,7 @@ class CompanyInfo extends React.Component {
     super(props)
     this.state = {
       company: {},
-    }
+    };
   }
   componentDidMount() {
     axios.get(`/company?name=${this.props.item}`)
@@ -17,7 +17,7 @@ class CompanyInfo extends React.Component {
         // handle success
         this.setState({
           company: response.data[0],
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -61,5 +61,3 @@ class CompanyInfo extends React.Component {
   }
 }
 export default CompanyInfo;
-
-//{this.props.match.params.name}

@@ -1,13 +1,12 @@
 import React from 'react';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-
 import axios from 'axios';
-
-import JobList from './JobList';
-import NoJob from './NoJob';
-
 import moment from 'moment';
+
+import JobList from './JobList.jsx';
+import NoJob from './NoJob.jsx';
+
 
 class JobTabLayout extends React.Component {
   constructor(props) {
@@ -17,8 +16,7 @@ class JobTabLayout extends React.Component {
         leverJobList: [],
         angelListJobList: [],
         stackoverflowList: []
-    }
-
+    };
   }
 
   componentDidMount() {
@@ -34,10 +32,6 @@ class JobTabLayout extends React.Component {
 
     axios.get(greenApiLink)
       .then((response) => {
-        // handle success
-
-        // console.log(response.data);
-
         var jobList = [];
         response.data.jobs.map((item) => {
           jobList.push({
@@ -60,7 +54,6 @@ class JobTabLayout extends React.Component {
         })
       })
       .catch((error) => {
-        // handle error
         console.log(error);
       })
   }

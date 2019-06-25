@@ -24,25 +24,25 @@ class CompanyList extends Component {
     this.fetchCompanyData = this.fetchCompanyData.bind(this);
   }
 
-componentDidMount() {
-  this.fetchCompanyData()
-}
+  componentDidMount() {
+    this.fetchCompanyData();
+  }
 
-fetchCompanyData() {
-  axios.get('/items')
-    .then((response) => {
-      this.updateList(response.data)
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-}
+  fetchCompanyData() {
+    axios.get('/items')
+      .then((response) => {
+        this.updateList(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
-updateList(response) {
-  this.setState({
-    items: response,
-  })
-}
+  updateList(response) {
+    this.setState({
+      items: response,
+    });
+  }
 
   render() {
     const { items } = this.state;
@@ -55,7 +55,7 @@ updateList(response) {
           filter: false,
           sort: false,
           customBodyRender: (website) => {
-            return (<img src={`https://logo.clearbit.com/${website}`} width="40%" />)
+            return (<img src={`https://logo.clearbit.com/${website}`} width="40%" />);
           }
         }
       },
@@ -96,10 +96,11 @@ updateList(response) {
         this.setState({
           clickedCompanyName: rowData[1],
           show: true
-        })
+        });
       },
       rowsPerPageOptions: [10, 20, 50, 100, items.length]
-    }
+    };
+
     return (
       <div className="listing">
         <div className="looking">
@@ -109,16 +110,13 @@ updateList(response) {
         <div className="list">
 
           <MUIDataTable
-            styles={{"z-index": -1}}
+            styles={{ "z-index": -1 }}
             title={"Company List"}
             data={items}
             columns={columns}
             options={options}
           />
         </div>
-        {/* <div>
-        {this.state.isClicked ?  : null}
-        </div> */}
         <Modal
           size="lg"
           show={this.state.show}

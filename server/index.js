@@ -39,7 +39,7 @@ app.get('/angellist', function (req, res) {
   var companyName = req.query.company_name;
   cloudscraper.get(`https://angel.co/company/${companyName}/jobs`)
     .then(function (htmlString) {
-      const $ = cheerio.load(htmlString)
+      const $ = cheerio.load(htmlString);
 
       var jobList = [];
 
@@ -55,8 +55,8 @@ app.get('/angellist', function (req, res) {
           title: title,
           location: location,
           absolute_url: link,
-        })
-      })
+        });
+      });
 
       res.send({ jobList: jobList });
     })
@@ -88,8 +88,8 @@ app.get('/stackoverflow', function (req, res) {
           location: location,
           absolute_url: link,
           updated_at: postTime
-        })
-      })
+        });
+      });
 
       res.send({ jobList: jobList });
     })
