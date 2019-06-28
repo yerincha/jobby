@@ -51,6 +51,6 @@ IGNORE 1 LINES;
     (ID)
 )
 
-    -- INSERT INTO openings(company_id)
-    -- SELECT id
-    -- FROM company;
+    INSERT INTO openings(company_id)
+    SELECT id
+    FROM company;

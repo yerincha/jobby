@@ -22,10 +22,9 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
-dist/
 
 # Webpack Bundle
-public/bundle.js
+public/dist/bundle.js
 
 # Maps Config
 client/maps-config.js
