@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 });
 
 var selectAll = function (callback) {
-  connection.query('SELECT * FROM company inner join openings on company.id = openings.id;', function (err, results, fields) {
+  connection.query('SELECT * FROM company inner join openings on company.id = openings.id ORDER BY openings.total DESC;', function (err, results, fields) {
     if (err) {
       callback(err, null);
     } else {

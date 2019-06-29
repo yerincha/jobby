@@ -10,11 +10,11 @@ const Map = ({ item }) => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   return (
     <GoogleMap
-      defaultZoom={8}
+      defaultZoom={7}
       defaultCenter={{ lat: Number(37.772221), lng: Number(-122.423950) }}
     >
         <Marker 
-          options={{ icon: { url: `https://logo.clearbit.com/${item.website}`, scaledSize: new google.maps.Size(30, 30)} }}
+          options={{ scaledSize: new google.maps.Size(30, 30)} }
           position={{ lat: Number(item.latitude), lng: Number(item.longitute) }} 
           onClick={()=> {
             setSelectedCompany(item);

@@ -8,7 +8,7 @@ class JobItem extends React.Component {
     }
     this.handleClick.bind(this);
   }
-
+  
   handleClick(e) {
     e.preventDefault();
     

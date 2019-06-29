@@ -16,8 +16,9 @@ class CompanyList extends Component {
       show: false,
     }
 
-    this.handleHide = () => {
+    this.handleHide = (e) => {
       this.setState({ show: false });
+      // e.preventDefault();
     };
 
     this.updateList = this.updateList.bind(this);
@@ -44,6 +45,10 @@ class CompanyList extends Component {
     });
   }
 
+  addDefaultSrc(e) {
+    e.target.src = 'https://cdn.iconscout.com/icon/premium/png-256-thumb/page-not-found-1-503918.png'
+  }
+
   render() {
     const { items } = this.state;
 
@@ -55,7 +60,7 @@ class CompanyList extends Component {
           filter: false,
           sort: false,
           customBodyRender: (website) => {
-            return (<img src={`https://logo.clearbit.com/${website}`} width="40%" />);
+            return (<img src={`https://logo.clearbit.com/${website}?size=80`} width='20%' onError={this.addDefaultSrc} />);
           }
         }
       },
@@ -108,7 +113,6 @@ class CompanyList extends Component {
           There are {items.length} companies.
       </div>
         <div className="list">
-
           <MUIDataTable
             styles={{ "z-index": -1 }}
             title={"Company List"}

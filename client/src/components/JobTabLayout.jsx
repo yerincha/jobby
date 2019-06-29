@@ -12,10 +12,10 @@ class JobTabLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        greenHouseJobList: [],
-        leverJobList: [],
-        angelListJobList: [],
-        stackoverflowList: []
+      greenHouseJobList: [],
+      leverJobList: [],
+      angelListJobList: [],
+      stackoverflowList: []
     };
   }
 
@@ -28,7 +28,7 @@ class JobTabLayout extends React.Component {
 
   loadGreenHouse(companyName) {
 
-    var greenApiLink = `https://boards-api.greenhouse.io/v1/boards/${companyName.toLowerCase().trim().replace(' ','-')}/jobs`;
+    var greenApiLink = `https://boards-api.greenhouse.io/v1/boards/${companyName.toLowerCase().trim().replace(' ', '-')}/jobs`;
 
     axios.get(greenApiLink)
       .then((response) => {
@@ -50,7 +50,7 @@ class JobTabLayout extends React.Component {
 
 
         this.setState({
-            greenHouseJobList: jobList
+          greenHouseJobList: jobList
         })
       })
       .catch((error) => {
@@ -59,7 +59,7 @@ class JobTabLayout extends React.Component {
   }
 
   loadLever(companyName) {
-    var leverApiLink = `https://api.lever.co/v0/postings/${companyName.toLowerCase().trim().replace(' ','-')}`;
+    var leverApiLink = `https://api.lever.co/v0/postings/${companyName.toLowerCase().trim().replace(' ', '-')}`;
 
     axios.get(leverApiLink)
       .then((response) => {
@@ -93,10 +93,10 @@ class JobTabLayout extends React.Component {
     var self = this;
 
     axios({
-        method: 'get',
-        url: `http://localhost:3333/angellist?company_name=${companyName}`,
-        responseType: 'json'
-      })
+      method: 'get',
+      url: `http://localhost:3333/angellist?company_name=${companyName}`,
+      responseType: 'json'
+    })
       .then(function (res) {
         var newList = res.data;
 
@@ -118,10 +118,10 @@ class JobTabLayout extends React.Component {
     var self = this;
 
     axios({
-        method: 'get',
-        url: `http://localhost:3333/stackoverflow?company_name=${companyName}`,
-        responseType: 'json'
-      })
+      method: 'get',
+      url: `http://localhost:3333/stackoverflow?company_name=${companyName}`,
+      responseType: 'json'
+    })
       .then(function (res) {
         var newList = res.data;
         var copiedList = [];
@@ -143,25 +143,25 @@ class JobTabLayout extends React.Component {
     if (list === undefined || list.length === 0) {
       return <NoJob />;
     }
-    return <JobList jobList={list}/>;
+    return <JobList jobList={list} />;
   }
 
   render() {
     return (
       <div className='job_tab'>
         <Tabs defaultActiveKey="green_houst" id="uncontrolled-tab-example">
-            <Tab eventKey="green_house" title={'GreenHouse '+this.state.greenHouseJobList.length}>
-              <this.JobListOrNotFound jobList={this.state.greenHouseJobList} />
-            </Tab>
-            <Tab eventKey="lever" title={'Lever '+this.state.leverJobList.length}>
-              <this.JobListOrNotFound jobList={this.state.leverJobList} />
-            </Tab>
-            <Tab eventKey="angellist" title={'AngelList '+this.state.angelListJobList.length}>
-              <this.JobListOrNotFound jobList={this.state.angelListJobList} />
-            </Tab>
-            <Tab eventKey="stackoverflow" title={'Stackoverflow '+this.state.stackoverflowList.length}>
-              <this.JobListOrNotFound jobList={this.state.stackoverflowList} />
-            </Tab>
+          <Tab eventKey="green_house" title={'GreenHouse ' + this.state.greenHouseJobList.length}>
+            <this.JobListOrNotFound jobList={this.state.greenHouseJobList} />
+          </Tab>
+          <Tab eventKey="lever" title={'Lever ' + this.state.leverJobList.length}>
+            <this.JobListOrNotFound jobList={this.state.leverJobList} />
+          </Tab>
+          <Tab eventKey="angellist" title={'AngelList ' + this.state.angelListJobList.length}>
+            <this.JobListOrNotFound jobList={this.state.angelListJobList} />
+          </Tab>
+          <Tab eventKey="stackoverflow" title={'Stackoverflow ' + this.state.stackoverflowList.length}>
+            <this.JobListOrNotFound jobList={this.state.stackoverflowList} />
+          </Tab>
         </Tabs>
       </div>
     )
